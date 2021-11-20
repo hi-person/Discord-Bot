@@ -5,7 +5,9 @@ import json
 import random
 from replit import db
 from keep_alive import keep_alive
+
 client = discord.Client()
+
 sad_words = ["sad", "depressed", "unhappy", "angry", "miserable"]
 
 starter_encouragements = [
@@ -13,6 +15,7 @@ starter_encouragements = [
   "Hang in there.",
   "You are a great person / bot!"
 ]
+
 if "responding" not in db.keys():
   db["responding"] = True
 
@@ -35,23 +38,19 @@ def delete_encouragment(index):
   if len(encouragements) > index:
     del encouragements[index]
   db["encouragements"] = encouragements
+
 @client.event
 async def on_ready():
   print("We have logged in as {0.user}".format(client))
 
 @client.event
-async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
-
-@client.event
 async def on_message(message):
-    if message.author == client.user:
-        return
+  if message.author == client.user:
+    return
 
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
-        
-    if msg.startswith("$inspire"):
+  msg = message.content
+
+  if msg.startswith("$inspire"):
     quote = get_quote()
     await message.channel.send(quote)
 
@@ -91,5 +90,5 @@ async def on_message(message):
     else:
       db["responding"] = False
       await message.channel.send("Responding is off.")
-keep_alive()
-client.run(os.getenv('TOKEN'))
+keep.alive()
+client.run(os.getenv("TOKEN"))
