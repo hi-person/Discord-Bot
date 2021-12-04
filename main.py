@@ -4,7 +4,6 @@ import requests
 import json
 import random
 from replit import db
-from keep_alive import keep_alive
 
 client = discord.Client()
 
@@ -90,5 +89,19 @@ async def on_message(message):
     else:
       db["responding"] = False
       await message.channel.send("Responding is off.")
-keep.alive()
+from flask import Flask
+from threading import Thread
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Hello. I am alive!"
+
+def run():
+  app.run(host='0.0.0.0',port=8080)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
 client.run(os.getenv("TOKEN"))
